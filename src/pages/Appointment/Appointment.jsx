@@ -1,7 +1,9 @@
+import WorkInProgress from "../WorkInProgress/WorkInProgress";
+
 const Appointment = () => {
     return (
         <>
-            WORK IN PROGRESS
+            <WorkInProgress/>
         </>
     )
 }

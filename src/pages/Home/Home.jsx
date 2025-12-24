@@ -1,7 +1,9 @@
+import WorkInProgress from "../WorkInProgress/WorkInProgress";
+
 const Home = () => {
     return (
         <>
-            WORK IN PROGRESS
+            <WorkInProgress/>
         </>
     )
 }

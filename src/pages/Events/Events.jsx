@@ -1,7 +1,9 @@
+import WorkInProgress from "../WorkInProgress/WorkInProgress";
+
 const Events = () => {
     return (
         <>
-            WORK IN PROGRESS
+            <WorkInProgress/>
         </>
     )
 }

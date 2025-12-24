@@ -1,7 +1,9 @@
+import WorkInProgress from "../WorkInProgress/WorkInProgress";
+
 const Certificates = () => {
     return (
         <>
-            WORK IN PROGRESS
+            <WorkInProgress/>
         </>
     )
 }

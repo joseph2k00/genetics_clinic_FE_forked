@@ -1,0 +1,59 @@
+/* =========================
+   work-in-progress Layout
+   ========================= */
+.work-in-progress {
+    min-height: calc(100vh - 80px); /* accounts for navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: linear-gradient(
+        135deg,
+        #f9f5fb,
+        #ffffff
+    );
+}
+
+/* =========================
+   Card
+   ========================= */
+.work-in-progress-card {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3rem 3.5rem;
+    border-radius: 1.5rem;
+
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.08);
+
+    max-width: 480px;
+    width: 100%;
+}
+
+/* =========================
+   Typography
+   ========================= */
+.work-in-progress-card h1 {
+    font-size: 2rem;
+    color: #772D8B;
+    margin-bottom: 1rem;
+}
+
+.work-in-progress-card p {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 480px) {
+    .work-in-progress-card {
+        padding: 2.25rem;
+    }
+
+    .work-in-progress-card h1 {
+        font-size: 1.7rem;
+    }
+}
