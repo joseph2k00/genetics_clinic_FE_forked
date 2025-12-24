@@ -7,6 +7,7 @@ import Home from "./pages/Home/Home";
 import Navbar from "./components/NavBar/NavBar";
 import Research from "./pages/Research/Research";
 import Awards from "./pages/Awards/Awards";
+import "./App.css";
 
 function App() {
   return (

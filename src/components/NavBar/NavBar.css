@@ -1,0 +1,107 @@
+/* =========================
+   Navbar container
+   ========================= */
+.navbar {
+    position: relative;
+    padding: 1.25rem 0; /* 20px */
+}
+
+/* =========================
+   Desktop menu
+   ========================= */
+.navbar-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-list li {
+    margin: 0.3rem; /* ~5px */
+}
+
+.navbar a {
+    padding: 0.45rem 0.9rem; /* 7px 14px */
+    border-radius: 3rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #772D8B;
+}
+
+/* Active link */
+.navbar .active-link {
+    background-color: #772D8B;
+    color: #ffffff;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.25);
+}
+
+/* Hover state */
+.navbar .inactive-link:hover {
+    background-color: #E4D5E8;
+    transition: background-color 0.2s ease;
+}
+
+/* =========================
+   Hamburger / Close button
+   ========================= */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 1.25rem;   /* 20px */
+    right: 1.25rem; /* 20px */
+    z-index: 1001;
+
+    font-size: 2rem; /* 32px */
+    line-height: 1;
+    color: #772D8B;
+    cursor: pointer;
+
+    padding: 0.5rem 0.75rem;
+    border-radius: 50%;
+}
+
+/* =========================
+   Mobile fullscreen menu
+   ========================= */
+@media (max-width: 48rem) { /* 768px */
+
+    /* Show hamburger */
+    .hamburger {
+        display: block;
+    }
+
+    /* Hide desktop menu */
+    .navbar-list {
+        display: none;
+    }
+
+    /* Fullscreen overlay */
+    .navbar-list.fullscreen {
+        position: fixed;
+        inset: 0;
+        background-color: #ffffff;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem; /* 24px */
+
+        z-index: 1000;
+    }
+
+    .navbar-list.fullscreen li {
+        margin: 0;
+    }
+
+    .navbar-list.fullscreen a {
+        font-size: 1.3rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    /* Hide menu when closed */
+    .navbar-list.fullscreen:not(.show) {
+        display: none;
+    }
+}
