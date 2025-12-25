@@ -1,8 +1,12 @@
 .genetic-services {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
     background-color: #eadced;
     border-radius: 2rem;
     padding: 3rem 4rem;
-    margin: 50px 150px;
+    max-width: 60%;
 }
 
 /* TITLE */
@@ -54,6 +58,7 @@
 @media (max-width: 1024px) {
     .genetic-services {
         padding: 2.5rem 2.5rem;
+        max-width: 100%;
     }
 
     .services-grid {

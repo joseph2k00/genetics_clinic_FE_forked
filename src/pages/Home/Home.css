@@ -1,10 +1,10 @@
 .hero {
-    height: 91vh;
+    height: 93vh;
     background: linear-gradient(to top, #E4D5E8,#ffffff);
     display: flex;
 }
 .hero-img img {
-    height:91vh;
+    height:93vh;
     margin-left: 5vw;
 }
 .hero-desc {
