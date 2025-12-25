@@ -77,7 +77,6 @@ const Home = () => {
                     {hero.bio.split("\n").map((line, i) => (
                         <p key={i}>{line}</p>
                     ))}
-                    {hero.bio}
                 </div>
             </div>
             <GeneticServices/>
