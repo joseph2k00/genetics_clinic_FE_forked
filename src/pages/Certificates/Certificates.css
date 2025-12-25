@@ -1,0 +1,70 @@
+/* =========================
+   CERTIFICATES CONTAINER
+========================= */
+
+.certificates-single-column {
+    background-color: #eadced;
+    border-radius: 2.4rem;
+    padding: 3.5rem 3rem;
+    max-width: 1000px;
+    margin: 3rem auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+/* =========================
+   CERTIFICATE PILL
+========================= */
+
+.certificate-pill {
+    background-color: #ffffff;
+    color: #772D8B;
+    font-weight: 500;
+    font-size: 1rem;
+
+    padding: 1.1rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* =========================
+   HOVER EFFECT
+========================= */
+
+.certificate-pill:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(119, 45, 139, 0.25);
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+    .certificates-single-column {
+        padding: 3rem 2rem;
+        border-radius: 2.2rem;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+    .certificates-single-column {
+        padding: 2.2rem 1.5rem;
+        border-radius: 1.8rem;
+    }
+
+    .certificate-pill {
+        font-size: 0.95rem;
+        padding: 1rem 1.4rem;
+    }
+}
