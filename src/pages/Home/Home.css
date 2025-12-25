@@ -58,6 +58,9 @@
 
     .hero-desc {
         width: 55vw;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-title {
@@ -112,7 +115,7 @@
 ========================= */
 @media (max-width: 480px) {
     .hero-img img {
-        height: 55vh;
+        height: 50vh;
     }
 
     .hero-title {

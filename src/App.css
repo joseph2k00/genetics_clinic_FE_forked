@@ -72,6 +72,7 @@ a {
 @media (max-width: 1200px) {
     .section {
         padding: 0 100px;
+        max-width: 100%;
     }
 }
 
