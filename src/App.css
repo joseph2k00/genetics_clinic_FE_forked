@@ -39,7 +39,11 @@ a {
    SECTION LAYOUT
 ========================= */
 .section {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0 150px;
+    max-width: 75%;
 }
 
 /* =========================
