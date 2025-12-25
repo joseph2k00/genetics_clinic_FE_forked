@@ -1,0 +1,87 @@
+.genetic-services {
+    background-color: #eadced;
+    border-radius: 2rem;
+    padding: 3rem 4rem;
+    margin: 50px 150px;
+}
+
+/* TITLE */
+.services-title {
+    text-align: center;
+    color: #772D8B;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-top: 0px;
+    margin-bottom: 2.5rem;
+}
+
+/* GRID */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* CARD */
+.service-card {
+    background-color: #ffffff;
+    color: #772D8B;
+    font-weight: 500;
+    text-align: center;
+
+    /* Equal height magic */
+    min-height: 50px;
+    padding: 1.2rem 1.6rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 1.1rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+
+    line-height: 1.4;
+}
+
+.service-card:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    transition: 0.25s;
+}
+
+/* =========================
+   TABLET (≤1024px)
+========================= */
+@media (max-width: 1024px) {
+    .genetic-services {
+        padding: 2.5rem 2.5rem;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================
+   MOBILE (≤768px)
+========================= */
+@media (max-width: 768px) {
+    .genetic-services {
+        padding: 2rem 1.5rem;
+        border-radius: 1.5rem;
+        margin: 50px 25px;
+    }
+
+    .services-title {
+        font-size: 1.8rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.4rem;
+    }
+
+    .service-card {
+        font-size: 0.95rem;
+        padding: 1rem;
+    }
+}

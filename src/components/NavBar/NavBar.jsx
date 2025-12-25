@@ -1,12 +1,15 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./NavBar.css";
 
 function NavBar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const closeMenu = () => setMenuOpen(false);
-
+    useEffect(() => {
+        document.body.classList.toggle("menu-open", menuOpen);
+        return () => document.body.classList.remove("menu-open");
+    }, [menuOpen]);
     return (
         <nav className="navbar">
 

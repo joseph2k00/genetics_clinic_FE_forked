@@ -1,0 +1,219 @@
+/* ===============================
+   GENETICS CLINICS SECTION
+================================ */
+
+.genetics-clinics {
+    max-width: 1400px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+}
+
+/* ===============================
+   TITLE
+================================ */
+
+.clinics-title {
+    text-align: center;
+    color: #772D8B;
+    font-size: 2.6rem;
+    font-weight: 600;
+}
+
+/* ===============================
+   WRAPPER
+================================ */
+
+.clinics-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===============================
+   SCROLL TRACK
+================================ */
+
+.clinics-track {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1.5rem 0;
+    scrollbar-width: thin;
+}
+
+.clinics-track::-webkit-scrollbar {
+    height: 6px;
+}
+
+.clinics-track::-webkit-scrollbar-thumb {
+    background: #c9a4d3;
+    border-radius: 1rem;
+}
+
+/* ===============================
+   CLINIC CARD
+================================ */
+
+.clinic-card {
+    min-width: 360px;
+    height: 360px;
+    border-radius: 2.4rem;
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+}
+
+/* ===============================
+   IFRAME PREVIEW
+================================ */
+
+.clinic-card iframe {
+    position: absolute;
+    inset: 0;
+    border: none;
+    pointer-events: none;
+
+    /* scale website preview */
+    transform: scale(0.6);
+    transform-origin: top left;
+    width: 166%;
+    height: 166%;
+}
+
+/* ===============================
+   OVERLAY
+================================ */
+
+.clinic-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to top,
+        rgba(119, 45, 139, 1.0),
+        transparent
+    );
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding: 1.6rem;
+    color: #ffffff;
+}
+.clinic-overlay:hover {
+    background: linear-gradient(
+        to top,
+        rgb(66, 19, 79),
+        transparent
+    );
+    transition: 0.25s;
+}
+
+/* ===============================
+   TEXT
+================================ */
+
+.clinic-overlay h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.clinic-overlay p {
+    font-size: 0.95rem;
+    line-height: 1.2;
+    margin: 0;
+    opacity: 0.95;
+}
+
+/* ===============================
+   SCROLL BUTTONS
+================================ */
+
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: #772D8B;
+    color: #ffffff;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-btn.left {
+    left: -20px;
+}
+
+.scroll-btn.right {
+    right: -20px;
+}
+
+/* ===============================
+   TABLET
+================================ */
+
+@media (max-width: 1024px) {
+    .clinics-title {
+        font-size: 2.2rem;
+    }
+
+    .clinic-card {
+        min-width: 280px;
+        height: 400px;
+    }
+}
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+    .genetics-clinics {
+        margin: 3.5rem auto;
+        padding: 0 1rem;
+    }
+
+    .clinics-title {
+        font-size: 1.9rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .clinic-card {
+        min-width: 120px;
+        height: 120px;
+    }
+
+    .scroll-btn {
+        display: none;
+    }
+}
+
+/* ===============================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 480px) {
+    .clinic-card {
+        min-width: 150px;
+        height: 150px;
+    }
+
+    .clinic-overlay h3 {
+        font-size: 1.15rem;
+    }
+
+    .clinic-overlay p {
+        font-size: 0.9rem;
+    }
+}

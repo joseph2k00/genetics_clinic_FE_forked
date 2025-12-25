@@ -1,0 +1,110 @@
+/* =========================
+   CONTAINER
+========================= */
+
+.floating-contact {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+}
+
+/* =========================
+   WHATSAPP BUTTON
+========================= */
+
+.whatsapp-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #772D8B;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   TOGGLE ARROW
+========================= */
+
+.toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #772D8B;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease;
+}
+
+.toggle-btn.open {
+    transform: rotate(180deg);
+}
+
+/* =========================
+   EXPANDABLE ICONS
+========================= */
+
+.floating-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+}
+
+.floating-icons.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.floating-icons a {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #772D8B;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.floating-icons a:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   MOBILE SAFE
+========================= */
+
+@media (max-width: 480px) {
+    .whatsapp-btn {
+        width: 54px;
+        height: 54px;
+        font-size: 1.8rem;
+    }
+}

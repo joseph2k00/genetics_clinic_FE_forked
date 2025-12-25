@@ -1,14 +1,98 @@
-/* IMPORTANT: Fix Import */
+/* =========================
+   FONT IMPORT
+========================= */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-body {
-  font-family: 'Montserrat', sans-serif;
+/* =========================
+   GLOBAL RESET
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-ul, li {
-    list-style: none;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
+
+/* =========================
+   LISTS & LINKS
+========================= */
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 a {
     text-decoration: none;
     color: #772D8B;
+}
+
+/* =========================
+   SECTION LAYOUT
+========================= */
+.section {
+    padding: 0 150px;
+}
+
+/* =========================
+   SECTION TITLES
+========================= */
+.section-title {
+    margin: 20px 0;
+    text-align: center;
+    color: #772D8B;
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+/* =========================
+   SECTION TEXT
+========================= */
+.section-text {
+    line-height: 1.6;
+}
+
+/* =========================
+   RESPONSIVE FIXES
+========================= */
+
+/* Large tablets / small laptops */
+@media (max-width: 1200px) {
+    .section {
+        padding: 0 100px;
+    }
+}
+
+/* Tablets (iPad, iPad Mini) */
+@media (max-width: 900px) {
+    .section {
+        padding: 0 60px;
+    }
+
+    .section-title {
+        font-size: 2.1rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .section {
+        padding: 0 24px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .section-text {
+        font-size: 0.95rem;
+    }
 }

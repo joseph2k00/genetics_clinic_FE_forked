@@ -1,58 +1,79 @@
 /* =========================
-   Navbar container
-   ========================= */
+   NAVBAR BASE
+========================= */
+
 .navbar {
     position: relative;
-    padding: 1.25rem 0; /* 20px */
+    width: 95%;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* =========================
-   Desktop menu
-   ========================= */
+   NAV LIST (DESKTOP)
+========================= */
+
 .navbar-list {
     display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 0.6rem;
     list-style: none;
     padding: 0;
     margin: 0;
+
+    flex-wrap: nowrap;           /* 🔑 prevents iPad wrapping */
+    white-space: nowrap;
 }
 
 .navbar-list li {
-    margin: 0.3rem; /* ~5px */
+    flex-shrink: 0;              /* 🔑 prevents shrinking */
 }
 
 .navbar a {
-    padding: 0.45rem 0.9rem; /* 7px 14px */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.45rem 0.9rem;
     border-radius: 3rem;
     font-weight: 500;
+    font-size: 0.95rem;
+
     text-decoration: none;
     color: #772D8B;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Active link */
+/* =========================
+   ACTIVE / HOVER
+========================= */
+
 .navbar .active-link {
     background-color: #772D8B;
     color: #ffffff;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.25);
 }
 
-/* Hover state */
 .navbar .inactive-link:hover {
     background-color: #E4D5E8;
-    transition: background-color 0.2s ease;
 }
 
 /* =========================
-   Hamburger / Close button
-   ========================= */
+   HAMBURGER
+========================= */
+
 .hamburger {
     display: none;
     position: fixed;
-    top: 1.25rem;   /* 20px */
-    right: 1.25rem; /* 20px */
+    top: 1rem;
+    right: 1rem;
     z-index: 1001;
 
-    font-size: 2rem; /* 32px */
+    font-size: 2rem;
     line-height: 1;
     color: #772D8B;
     cursor: pointer;
@@ -62,9 +83,11 @@
 }
 
 /* =========================
-   Mobile fullscreen menu
-   ========================= */
-@media (max-width: 48rem) { /* 768px */
+   BREAKPOINT FIX (iPad Mini)
+   Switch to hamburger EARLY
+========================= */
+
+@media (max-width: 860px) {
 
     /* Show hamburger */
     .hamburger {
@@ -76,7 +99,7 @@
         display: none;
     }
 
-    /* Fullscreen overlay */
+    /* Fullscreen menu */
     .navbar-list.fullscreen {
         position: fixed;
         inset: 0;
@@ -86,22 +109,34 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 1.5rem; /* 24px */
 
+        gap: 1.5rem;
         z-index: 1000;
     }
 
     .navbar-list.fullscreen li {
-        margin: 0;
+        width: 100%;
+        text-align: center;
     }
 
     .navbar-list.fullscreen a {
-        font-size: 1.3rem;
-        padding: 0.75rem 1.5rem;
+        font-size: 1.25rem;
+        padding: 0.75rem 1.6rem;
+        min-width: 240px;
     }
 
-    /* Hide menu when closed */
     .navbar-list.fullscreen:not(.show) {
         display: none;
+    }
+}
+
+/* =========================
+   SMALL DEVICES
+========================= */
+
+@media (max-width: 360px) {
+    .navbar-list.fullscreen a {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.2rem;
     }
 }

@@ -1,0 +1,148 @@
+.hero {
+    height: 91vh;
+    background: linear-gradient(to top, #E4D5E8,#ffffff);
+    display: flex;
+}
+.hero-img img {
+    height:91vh;
+    margin-left: 5vw;
+}
+.hero-desc {
+    align-content: center;
+    justify-content: center;
+    width: 50vw;
+}
+.hero-title {
+    color: #772D8B;
+    font-weight: 600;
+    font-size: 3.5rem;
+}
+.hero-subtitle {
+  max-width: 90%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+.request-appointment {
+    margin-top: 3rem;
+    margin-left: 12rem;
+}
+.request-appointment-btn {
+    padding: 0.45rem 0.9rem; /* 7px 14px */
+    border-radius: 3rem;
+    font-weight: 500;
+    text-decoration: none;
+    background-color: #772D8B;
+    color: #ffffff;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.25);
+}
+.request-appointment-btn:hover {
+    background-color: #ffffff;
+    color: #772D8B;
+    transition: 0.25s;
+}
+
+/* =========================
+   TABLET (≤1024px)
+========================= */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .hero-img img {
+        height: 70vh;
+        margin-left: 2vw;
+    }
+
+    .hero-desc {
+        width: 55vw;
+    }
+
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .request-appointment {
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* =========================
+   MOBILE (≤768px)
+========================= */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        height: auto;
+        padding: 2rem 1.5rem;
+    }
+
+    .hero-img img {
+        height: 45vh;
+        margin-left: 0;
+    }
+
+    .hero-desc {
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        max-width: 100%;
+    }
+
+    .request-appointment {
+        margin-left: 0;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* =========================
+   SMALL MOBILE (≤480px)
+========================= */
+@media (max-width: 480px) {
+    .hero-img img {
+        height: 55vh;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle p {
+        font-size: 0.95rem;
+    }
+
+    .request-appointment-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1.2rem;
+    }
+}
+
+/* =========================
+   OVERVIEW SECTION
+========================= */
+@media (max-width: 768px) {
+    .section {
+        padding: 2rem 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .section-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+}

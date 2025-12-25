@@ -8,10 +8,13 @@ import Navbar from "./components/NavBar/NavBar";
 import Research from "./pages/Research/Research";
 import Awards from "./pages/Awards/Awards";
 import "./App.css";
+import Footer from "./components/Footer/Footer";
+import Socials from "./components/Socials/Socials";
 
 function App() {
   return (
     <Router>
+      <Socials />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,6 +25,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/appointment" element={<Appointment />} />
       </Routes>
+      <Footer />
     </Router>
   )
 }
