@@ -1,0 +1,180 @@
+/* =========================
+   SECTION
+========================= */
+
+.contact-section {
+    margin-top: 40px;
+    background-color: #eadced;
+    padding: 4rem 1.5rem;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 2rem;
+    padding: 3rem 3rem 3.5rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+}
+
+.contact-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.contact-title {
+    text-align: center;
+    color: #772D8B;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2.2rem;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* =========================
+   FLOATING LABEL GROUP
+========================= */
+
+/* =========================
+   FLOATING LABEL GROUP
+========================= */
+
+.floating-group {
+    position: relative;
+}
+
+/* Input / Textarea */
+.floating-group input,
+.floating-group textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border-radius: 1.2rem;
+    border: 1px solid #ddd;
+    font-size: 0.95rem;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+}
+
+/* Label (acts as placeholder initially) */
+.floating-group label {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    background-color: #fff;
+    padding: 0 0.3rem;
+}
+
+/* Focus or has value → float label */
+.floating-group input:focus + label,
+.floating-group input:not(:placeholder-shown) + label,
+.floating-group textarea:focus + label,
+.floating-group textarea:not(:placeholder-shown) + label {
+    top: -0.45rem;
+    font-size: 0.75rem;
+    color: #772D8B;
+}
+
+/* Focus ring */
+.floating-group input:focus,
+.floating-group textarea:focus {
+    border-color: #772D8B;
+    box-shadow: 0 0 0 3px rgba(119, 45, 139, 0.15);
+}
+
+/* Textarea */
+.floating-group textarea {
+    resize: none;
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.floating-group textarea {
+    resize: none;
+}
+
+/* =========================
+   STATUS MESSAGES
+========================= */
+
+.form-success {
+    color: #2e7d32;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.form-error {
+    color: #c62828;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
+.submit-btn {
+    align-self: center;
+    padding: 0.7rem 2.2rem;
+    border-radius: 2rem;
+    border: none;
+    background-color: #772D8B;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(119, 45, 139, 0.35);
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: #5c1f6d;
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    background-color: #bda5c7;
+    cursor: not-allowed;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+    .contact-container {
+        padding: 2.2rem 1.6rem 2.6rem;
+        border-radius: 1.6rem;
+    }
+
+    .contact-title {
+        font-size: 1.7rem;
+    }
+}

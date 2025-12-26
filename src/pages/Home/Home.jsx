@@ -6,6 +6,7 @@ import GeneticServices from "./components/GeneticServices/GeneticServices";
 import GeneticsClinics from "./components/GeneticClinics/GeneticsClinics";
 import Videos from "./components/Videos/Videos";
 import Loader from "../../components/Loader/Loader";
+import ContactForm from "../../components/ContactForm/ContactForm";
 
 const Home = () => {
     const [hero, setHero] = useState(null);
@@ -63,7 +64,7 @@ const Home = () => {
                         ))}
                     </div>
                     <div className="request-appointment">
-                        <a href="#" className="request-appointment-btn">
+                        <a href="#appointment-form" className="request-appointment-btn">
                             Request an Appointment  
                         </a>
                     </div>
@@ -82,6 +83,7 @@ const Home = () => {
             <GeneticServices/>
             <GeneticsClinics/>
             <Videos/>
+            <ContactForm/>
         </>
     )
 }
