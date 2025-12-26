@@ -51,8 +51,8 @@ const Events = () => {
 
                         // 🔑 MOBILE = >3, DESKTOP = >6
                         scrollable[event._key] = isMobile
-                            ? event.images.length > 3
-                            : event.images.length > 6;
+                            ? event.images.length > 2
+                            : event.images.length > 4;
                     }
                 });
 
