@@ -86,8 +86,7 @@
    BREAKPOINT FIX (iPad Mini)
    Switch to hamburger EARLY
 ========================= */
-
-@media (max-width: 860px) {
+@media (max-width: 1080px) {
 
     /* Show hamburger */
     .hamburger {
