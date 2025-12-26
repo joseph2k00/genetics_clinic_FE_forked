@@ -1,32 +1,111 @@
+import { useEffect, useState } from "react";
+import { sanityClient } from "../../SanityClient";
 import "./Footer.css";
+import {
+    FaWhatsapp,
+    FaEnvelope,
+    FaFacebookF,
+    FaInstagram,
+    FaLinkedinIn,
+    FaPhoneAlt
+} from "react-icons/fa";
 
 const Footer = () => {
+    const [contact, setContact] = useState(null);
+
+    useEffect(() => {
+        sanityClient
+            .fetch(`
+                *[_type == "contact" && _id == "contact"][0]{
+                    title,
+                    phone,
+                    email,
+                    whatsapp,
+                    facebook,
+                    instagram,
+                    linkedin
+                }
+            `)
+            .then(setContact)
+            .catch(console.error);
+    }, []);
+
+    if (!contact) return null;
+
     return (
         <footer className="footer">
-            <p className="footer-text">For more information</p>
-
+            <p className="footer-text">
+                {contact.title || "For more information"}
+            </p>
             <div className="footer-icons">
-                <a href="https://wa.me/971987654321" aria-label="WhatsApp">
-                    <i className="icon whatsapp"></i>
-                </a>
-                <a href="mailto:info@example.com" aria-label="Email">
-                    <i className="icon email"></i>
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
-                    <i className="icon facebook"></i>
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
-                    <i className="icon instagram"></i>
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                    <i className="icon linkedin"></i>
-                </a>
-            </div>
+                {contact.whatsapp && (
+                    <a
+                        href={contact.whatsapp}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="WhatsApp"
+                    >
+                        <span className="icon">
+                            <FaWhatsapp />
+                        </span>
+                    </a>
+                )}
 
-            <div className="footer-phone">
-                <span>📞</span>
-                <a href="tel:+971987654321">+971 98 765 4321</a>
+                {contact.email && (
+                    <a href={`mailto:${contact.email}`} aria-label="Email">
+                        <span className="icon">
+                            <FaEnvelope />
+                        </span>
+                    </a>
+                )}
+
+                {contact.facebook && (
+                    <a
+                        href={contact.facebook}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Facebook"
+                    >
+                        <span className="icon">
+                            <FaFacebookF />
+                        </span>
+                    </a>
+                )}
+
+                {contact.instagram && (
+                    <a
+                        href={contact.instagram}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Instagram"
+                    >
+                        <span className="icon">
+                            <FaInstagram />
+                        </span>
+                    </a>
+                )}
+
+                {contact.linkedin && (
+                    <a
+                        href={contact.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="LinkedIn"
+                    >
+                        <span className="icon">
+                            <FaLinkedinIn />
+                        </span>
+                    </a>
+                )}
             </div>
+            {contact.phone && (
+                <div className="footer-phone">
+                    <span><FaPhoneAlt /></span>
+                    <a href={`tel:${contact.phone}`}>
+                        {contact.phone}
+                    </a>
+                </div>
+            )}
         </footer>
     );
 };
