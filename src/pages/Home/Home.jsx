@@ -1,4 +1,3 @@
-import WorkInProgress from "../WorkInProgress/WorkInProgress";
 import "./Home.css";
 import { sanityClient, urlFor } from "../../SanityClient";
 import { useEffect, useState } from "react";
