@@ -141,7 +141,12 @@
         transform: scale(1);
     }
 }
-
+@media (min-width:900px) {
+    .event-medias {
+        width: 55vh;
+        height: 30vw;
+    }
+}
 /* =========================
    TABLET
 ========================= */
