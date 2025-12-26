@@ -10,6 +10,7 @@ import Awards from "./pages/Awards/Awards";
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Socials from "./components/Socials/Socials";
+import BackToTop from "./components/BackToTop/BackToTop";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/appointment" element={<Appointment />} />
       </Routes>
+      <BackToTop />
       <Footer />
     </Router>
   )
