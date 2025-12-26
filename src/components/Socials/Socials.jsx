@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     FaWhatsapp,
     FaEnvelope,
@@ -6,28 +6,112 @@ import {
     FaInstagram,
     FaLinkedinIn,
     FaChevronUp,
+    FaYoutube,
+    FaPhoneAlt,
 } from "react-icons/fa";
+import { sanityClient } from "../../SanityClient";
 import "./Socials.css";
 
 const Socials = () => {
     const [open, setOpen] = useState(false);
+    const [contact, setContact] = useState(null);
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        sanityClient
+            .fetch(`
+                *[_type == "contact" && _id == "contact"][0]{
+                    email,
+                    phone,
+                    whatsapp,
+                    facebook,
+                    instagram,
+                    linkedin,
+                    youtube
+                }
+            `)
+            .then(setContact)
+            .catch(console.error);
+    }, []);
+
+    /* ✅ Auto-close when clicking outside */
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(e.target)
+            ) {
+                setOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    if (!contact) return null;
 
     return (
-        <div className="floating-contact">
+        <div className="floating-contact" ref={containerRef}>
             {/* Expanded icons */}
             <div className={`floating-icons ${open ? "show" : ""}`}>
-                <a href="mailto:info@example.com" aria-label="Email">
-                    <FaEnvelope />
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                    <FaFacebookF />
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                    <FaInstagram />
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-                    <FaLinkedinIn />
-                </a>
+
+                {contact.phone && (
+                    <a href={`tel:${contact.phone}`} data-tooltip="Call">
+                        <FaPhoneAlt />
+                    </a>
+                )}
+
+                {contact.email && (
+                    <a href={`mailto:${contact.email}`} data-tooltip="Email">
+                        <FaEnvelope />
+                    </a>
+                )}
+
+                {contact.facebook && (
+                    <a
+                        href={contact.facebook}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-tooltip="Facebook"
+                    >
+                        <FaFacebookF />
+                    </a>
+                )}
+
+                {contact.instagram && (
+                    <a
+                        href={contact.instagram}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-tooltip="Instagram"
+                    >
+                        <FaInstagram />
+                    </a>
+                )}
+
+                {contact.linkedin && (
+                    <a
+                        href={contact.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-tooltip="LinkedIn"
+                    >
+                        <FaLinkedinIn />
+                    </a>
+                )}
+
+                {contact.youtube && (
+                    <a
+                        href={contact.youtube}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-tooltip="YouTube"
+                    >
+                        <FaYoutube />
+                    </a>
+                )}
             </div>
 
             {/* Toggle Arrow */}
@@ -40,15 +124,17 @@ const Socials = () => {
             </button>
 
             {/* WhatsApp Button */}
-            <a
-                href="https://wa.me/971987654321"
-                className="whatsapp-btn"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WhatsApp"
-            >
-                <FaWhatsapp />
-            </a>
+            {contact.whatsapp && (
+                <a
+                    href={contact.whatsapp}
+                    className="whatsapp-btn"
+                    target="_blank"
+                    rel="noreferrer"
+                    data-tooltip="WhatsApp"
+                >
+                    <FaWhatsapp />
+                </a>
+            )}
         </div>
     );
 };

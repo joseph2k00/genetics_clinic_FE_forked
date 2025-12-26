@@ -96,6 +96,59 @@
 .floating-icons a:hover {
     transform: scale(1.05);
 }
+/* =========================
+   TOOLTIP
+========================= */
+
+.floating-icons a {
+    position: relative;
+}
+
+.floating-icons a::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 55px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #772D8B;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.floating-icons a:hover::after {
+    opacity: 1;
+}
+/* Tooltip for WhatsApp button */
+.whatsapp-btn {
+    position: relative;
+}
+
+.whatsapp-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #772D8B;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.whatsapp-btn:hover::after {
+    opacity: 1;
+}
 
 /* =========================
    MOBILE SAFE
@@ -106,5 +159,9 @@
         width: 54px;
         height: 54px;
         font-size: 1.8rem;
+    }
+    .floating-icons a::after {
+        right: 50px;
+        font-size: 0.7rem;
     }
 }
