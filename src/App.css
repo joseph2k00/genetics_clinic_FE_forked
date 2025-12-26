@@ -11,6 +11,29 @@
 *::after {
     box-sizing: border-box;
 }
+/* Width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background: #772D8B;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+/* Thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9a4bb2;
+}
 
 html,
 body {
