@@ -48,9 +48,70 @@
     font-size: 1rem;
     color: #772D8B;
 }
+.metrics-card {
+    background: #ffffff;
+    border-radius: 1.6rem;
+    max-width: 1000px;
+    margin-top: 1.2rem;
+    padding: 1.4rem 1.6rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
 
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.metric {
+    background: #eadced;
+    border-radius: 1.2rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.metric-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #772D8B;
+    line-height: 1.1;
+}
+
+.metric-label {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    color: #333;
+    opacity: 0.85;
+}
+
+.metrics-note {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: #555;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.metrics-loading {
+    display: flex;
+    justify-content: center;
+}
+
+.metrics-fallback {
+    text-align: center;
+    color: #772D8B;
+}
+
+.end-text {
+    text-align: center;
+    opacity: 0.6;
+    padding: 0.8rem 0 0.2rem;
+}
 /* Mobile */
 @media (max-width: 600px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
     .research-container {
         padding: 1rem 1rem;
     }

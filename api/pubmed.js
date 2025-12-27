@@ -1,14 +1,19 @@
+// /api/pubmed.js
+// Returns paginated publications from PubMed + citation counts from NIH iCite
 export default async function handler(req, res) {
     try {
-        const page = parseInt(req.query.page || "0");
-        const limit = parseInt(req.query.limit || "20");
+        const page = Math.max(parseInt(req.query.page || "0", 10), 0);
+        const limit = Math.min(Math.max(parseInt(req.query.limit || "20", 10), 1), 50);
         const retstart = page * limit;
 
+        const term = req.query.term || "El-Hattab AW";
+
+        // 1) Search PubMed for PMIDs
         const searchUrl =
             "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?" +
             new URLSearchParams({
                 db: "pubmed",
-                term: "El-Hattab AW",
+                term,
                 sort: "date",
                 retmax: limit.toString(),
                 retstart: retstart.toString(),
@@ -16,14 +21,17 @@ export default async function handler(req, res) {
             });
 
         const searchRes = await fetch(searchUrl);
+        if (!searchRes.ok) {
+            return res.status(500).json({ error: "PubMed search failed" });
+        }
         const searchData = await searchRes.json();
 
-        const ids = searchData.esearchresult?.idlist || [];
-
+        const ids = searchData?.esearchresult?.idlist || [];
         if (!ids.length) {
             return res.status(200).json({ data: [], hasMore: false });
         }
 
+        // 2) Fetch summaries from PubMed
         const summaryUrl =
             "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?" +
             new URLSearchParams({
@@ -33,32 +41,52 @@ export default async function handler(req, res) {
             });
 
         const summaryRes = await fetch(summaryUrl);
+        if (!summaryRes.ok) {
+            return res.status(500).json({ error: "PubMed summary failed" });
+        }
         const summaryData = await summaryRes.json();
-        if (!summaryData.result) {
-            return res.status(200).json({ data: [], hasMore: false });
+
+        // 3) Fetch citation counts from NIH iCite
+        // iCite API: https://icite.od.nih.gov/api
+        const iciteUrl =
+            "https://icite.od.nih.gov/api/pubs?" +
+            new URLSearchParams({ pmids: ids.join(",") });
+
+        const iciteRes = await fetch(iciteUrl);
+        // iCite may occasionally fail; don't crash the page
+        const iciteJson = iciteRes.ok ? await iciteRes.json() : null;
+
+        const citationsByPmid = {};
+        if (iciteJson?.data?.length) {
+            for (const item of iciteJson.data) {
+                // item.pmid is a string/number; normalize to string
+                citationsByPmid[String(item.pmid)] = item.citation_count ?? 0;
+            }
         }
 
+        // 4) Build publications (defensive against missing summary entries)
         const publications = ids
             .map((id) => {
-                const item = summaryData.result[id];
+                const item = summaryData?.result?.[id];
                 if (!item) return null;
 
                 return {
                     id,
-                    title: item.title,
-                    journal: item.fulljournalname,
-                    year: item.pubdate?.split(" ")[0],
+                    title: item.title || "Untitled",
+                    journal: item.fulljournalname || "",
+                    year: item.pubdate ? item.pubdate.split(" ")[0] : "",
                     url: `https://pubmed.ncbi.nlm.nih.gov/${id}/`,
+                    citationCount: citationsByPmid[String(id)] ?? null, // null if iCite failed
                 };
             })
             .filter(Boolean);
 
-        res.status(200).json({
+        return res.status(200).json({
             data: publications,
             hasMore: publications.length === limit,
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to fetch publications" });
+        return res.status(500).json({ error: "Failed to fetch publications" });
     }
 }

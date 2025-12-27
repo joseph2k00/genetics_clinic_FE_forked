@@ -8,51 +8,103 @@ const LIMIT = 20;
 const Research = () => {
     const [papers, setPapers] = useState([]);
     const [page, setPage] = useState(0);
+
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
+
+    // const [metricsLoading, setMetricsLoading] = useState(true);
+    // const [metrics, setMetrics] = useState(null);
+
     const [hasMore, setHasMore] = useState(true);
     const [error, setError] = useState(null);
 
-    const observer = useRef();
+    const observer = useRef(null);
+    const inFlight = useRef(false); // prevents double-fetch
 
-    const lastPaperRef = (node) => {
-        if (loadingMore || !hasMore) return;
+    // Load metrics once
+    // useEffect(() => {
+    //     const loadMetrics = async () => {
+    //         try {
+    //             setMetricsLoading(true);
+    //             const res = await fetch("/api/pubmed-metrics");
+    //             const json = await res.json();
+    //             if (res.ok && json) setMetrics(json);
+    //         } catch (e) {
+    //             console.error(e);
+    //         } finally {
+    //             setMetricsLoading(false);
+    //         }
+    //     };
 
-        if (observer.current) observer.current.disconnect();
+    //     loadMetrics();
+    // }, []);
 
-        observer.current = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                setPage((prev) => prev + 1);
-            }
-        });
-
-        if (node) observer.current.observe(node);
-    };
-
+    // Load publications when page changes
     useEffect(() => {
         const fetchPublications = async () => {
+            if (inFlight.current) return;
+            if (!hasMore && page !== 0) return;
+
+            inFlight.current = true;
+            page === 0 ? setLoading(true) : setLoadingMore(true);
+
             try {
-                page === 0 ? setLoading(true) : setLoadingMore(true);
-
-                const res = await fetch(
-                    `/api/pubmed?page=${page}&limit=${LIMIT}`
-                );
-
+                const res = await fetch(`/api/pubmed?page=${page}&limit=${LIMIT}`);
                 const json = await res.json();
 
-                setPapers((prev) => [...prev, ...json.data]);
-                setHasMore(json.hasMore);
+                // Safety: never crash the UI if API fails
+                if (!res.ok || !Array.isArray(json.data)) {
+                    setError(json?.error || "Failed to load publications.");
+                    setHasMore(false);
+                    return;
+                }
+
+                setPapers((prev) => {
+                    // avoid duplicates if observer fires twice
+                    const seen = new Set(prev.map((p) => p.id));
+                    const merged = [...prev];
+                    for (const p of json.data) {
+                        if (!seen.has(p.id)) merged.push(p);
+                    }
+                    return merged;
+                });
+
+                setHasMore(Boolean(json.hasMore));
             } catch (err) {
                 console.error(err);
                 setError("Failed to load publications.");
+                setHasMore(false);
             } finally {
                 setLoading(false);
                 setLoadingMore(false);
+                inFlight.current = false;
             }
         };
 
         fetchPublications();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
+
+    // Cleanup observer on unmount
+    useEffect(() => {
+        return () => observer.current?.disconnect();
+    }, []);
+
+    const lastPaperRef = (node) => {
+        if (!node) return;
+        if (loading || loadingMore) return;
+        if (!hasMore) return;
+
+        if (observer.current) observer.current.disconnect();
+
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !inFlight.current && hasMore) {
+                setPage((prev) => prev + 1);
+            }
+        });
+
+        observer.current.observe(node);
+    };
 
     if (loading && page === 0) return <Loader />;
 
@@ -60,8 +112,44 @@ const Research = () => {
         <div className="section">
             <div className="section-title">Research & Publications</div>
 
+            {/* Metrics card */}
+            {/* <div className="metrics-card">
+                {metricsLoading ? (
+                    <div className="metrics-loading">
+                        <ScrollLoader />
+                    </div>
+                ) : metrics ? (
+                    <div className="metrics-grid">
+                        <div className="metric">
+                            <div className="metric-value">{metrics.totalCitations}</div>
+                            <div className="metric-label">Citations</div>
+                        </div>
+                        <div className="metric">
+                            <div className="metric-value">{metrics.hIndex}</div>
+                            <div className="metric-label">h-index</div>
+                        </div>
+                        <div className="metric">
+                            <div className="metric-value">{metrics.i10Index}</div>
+                            <div className="metric-label">i10-index</div>
+                        </div>
+                        <div className="metric">
+                            <div className="metric-value">{metrics.publications}</div>
+                            <div className="metric-label">Publications</div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="metrics-fallback">Metrics unavailable</div>
+                )}
+
+                <div className="metrics-note">
+                    Computed from PubMed publications + NIH iCite citation counts.
+                </div>
+            </div> */}
+
             <div className="research-container">
                 {error && <p className="error">{error}</p>}
+
+                {!error && papers.length === 0 && <p>No publications found.</p>}
 
                 {papers.map((paper, index) => {
                     const isLast = index === papers.length - 1;
@@ -73,11 +161,7 @@ const Research = () => {
                             key={paper.id}
                         >
                             <h3 className="publication-title">
-                                <a
-                                    href={paper.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
+                                <a href={paper.url} target="_blank" rel="noreferrer">
                                     {paper.title}
                                 </a>
                             </h3>
@@ -85,16 +169,17 @@ const Research = () => {
                             <p className="publication-meta">
                                 {paper.journal}
                                 {paper.year && ` • ${paper.year}`}
+                                {/* {typeof paper.citationCount === "number" &&
+                                    ` • ${paper.citationCount} citations`} */}
                             </p>
                         </div>
                     );
                 })}
 
                 {loadingMore && <ScrollLoader />}
-                {!hasMore && (
-                    <p style={{ textAlign: "center", opacity: 0.6 }}>
-                        No more publications
-                    </p>
+
+                {!loadingMore && !hasMore && papers.length > 0 && (
+                    <p className="end-text">No more publications</p>
                 )}
             </div>
         </div>
