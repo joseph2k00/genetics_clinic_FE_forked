@@ -2,7 +2,11 @@
   "rewrites": [
     {
       "source": "/admin/:path*",
-      "destination": "https://sanity-admin-zeta.vercel.app/:path*"
+      "destination": "https://genetics-clinic-admin.vercel.app/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
