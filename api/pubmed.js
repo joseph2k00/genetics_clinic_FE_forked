@@ -15,7 +15,7 @@ const fetchWithTimeout = async (url, ms = 8000) => {
 const formatSortPubDate = (sortpubdate) => {
     if (!sortpubdate) return "";
 
-    // Expected: "YYYY/MM/DD HH:mm"
+    // Expected format: "YYYY/MM/DD HH:mm"
     const [datePart] = sortpubdate.split(" ");
     const [year, month, day] = datePart.split("/");
 
@@ -28,16 +28,19 @@ const formatSortPubDate = (sortpubdate) => {
     });
 };
 
-
 export default async function handler(req, res) {
     try {
         const page = Math.max(parseInt(req.query.page || "0", 10), 0);
-        const limit = Math.min(Math.max(parseInt(req.query.limit || "20", 10), 1), 50);
+        const limit = Math.min(
+            Math.max(parseInt(req.query.limit || "20", 10), 1),
+            50
+        );
+
         const retstart = page * limit;
         const term = req.query.term || "El-Hattab AW";
 
         /* =========================
-           1) SEARCH PUBMED
+           1) SEARCH PUBMED (SORTED)
         ========================= */
 
         const searchUrl =
@@ -83,7 +86,6 @@ export default async function handler(req, res) {
         }
 
         const summaryData = await summaryRes.json();
-        console.log(summaryData);
 
         /* =========================
            3) FETCH ICITE (OPTIONAL)
@@ -108,11 +110,11 @@ export default async function handler(req, res) {
                 }
             }
         } catch {
-            // iCite failures are silently ignored
+            // silently ignore iCite failures
         }
 
         /* =========================
-           4) BUILD RESPONSE
+           4) BUILD & SORT RESPONSE
         ========================= */
 
         const publications = ids
@@ -126,17 +128,35 @@ export default async function handler(req, res) {
                     journal: item.fulljournalname || "",
                     year: item.pubdate ? item.pubdate.split(" ")[0] : "",
                     publicationDate: formatSortPubDate(item.sortpubdate),
+                    _sortDate: item.sortpubdate || "", // internal use only
                     authors: Array.isArray(item.authors)
                         ? item.authors.map((a) => a.name).join(", ")
                         : "",
                     url: `https://pubmed.ncbi.nlm.nih.gov/${id}/`,
                     citationCount: citationsByPmid[String(id)] ?? null,
+                    source: item.source || "",
                 };
             })
             .filter(Boolean);
 
+        // ✅ SORT: newest → oldest
+        publications.sort((a, b) => {
+            const dateA = a._sortDate
+                ? new Date(a._sortDate.replace(/\//g, "-"))
+                : 0;
+            const dateB = b._sortDate
+                ? new Date(b._sortDate.replace(/\//g, "-"))
+                : 0;
+            return dateB - dateA;
+        });
+
+        // Remove internal field
+        const cleanPublications = publications.map(
+            ({ _sortDate, ...rest }) => rest
+        );
+
         return res.status(200).json({
-            data: publications,
+            data: cleanPublications,
             hasMore: publications.length === limit,
         });
     } catch (err) {

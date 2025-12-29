@@ -175,6 +175,12 @@ const Research = () => {
                                     )}
                                 </div>
 
+                                {paper.source && (
+                                    <div className="publication-details">
+                                        Source: <span className="publication-sub-content">{paper.source}</span>
+                                    </div>
+                                )}
+
                                 {paper.publicationDate && (
                                     <div className="publication-details">
                                         Publication Date: <span className="publication-sub-content">{paper.publicationDate}</span>
