@@ -169,7 +169,13 @@ const Events = () => {
                         <div className="event-details">
                             <h3>{event.title}</h3>
                             {event.date && (
-                                <p className="event-date">{event.date}</p>
+                                <p className="event-date">
+                                    {new Date(event.date).toLocaleDateString("en-GB", {
+                                        day: "numeric",
+                                        month: "long",
+                                        year: "numeric",
+                                    })}
+                                </p>
                             )}
                             {event.body?.[0]?.children?.[0]?.text && (
                                 <p className="event-description">
