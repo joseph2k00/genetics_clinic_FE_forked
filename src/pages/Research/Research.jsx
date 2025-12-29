@@ -153,7 +153,7 @@ const Research = () => {
                     const isLast = index === papers.length - 1;
 
                     return (
-                        <div
+                        <a href={paper.url} target="_blank" rel="noreferrer"
                             ref={isLast ? lastPaperRef : null}
                             className="publication-card"
                             key={paper.id}
@@ -179,7 +179,7 @@ const Research = () => {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </a>
                     );
                 })}
 
