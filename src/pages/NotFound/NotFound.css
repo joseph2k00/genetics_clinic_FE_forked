@@ -1,0 +1,106 @@
+/* =========================
+   Not Found Layout
+   ========================= */
+.not-found {
+    min-height: calc(100vh - 80px); /* accounts for navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: linear-gradient(
+        135deg,
+        #f9f5fb,
+        #ffffff
+    );
+}
+
+/* =========================
+   Card
+   ========================= */
+.not-found-card {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3rem 3.5rem;
+    border-radius: 1.5rem;
+
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.08);
+
+    max-width: 480px;
+    width: 100%;
+}
+
+/* =========================
+   Typography
+   ========================= */
+.not-found-card h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #772D8B;
+    margin-bottom: 0.5rem;
+}
+
+.not-found-card h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.not-found-card p {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* =========================
+   Button
+   ========================= */
+.home-btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 999px;
+
+    background-color: #772D8B;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: 
+        background-color 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.home-btn:hover {
+    background-color: #5f2270;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(119, 45, 139, 0.25);
+}
+
+/* =========================
+   Icon
+   ========================= */
+.not-found-icon {
+    font-size: 5rem;
+    color: #772D8B;
+    margin-bottom: 1.5rem;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 480px) {
+    .not-found-card {
+        padding: 2.25rem;
+    }
+
+    .not-found-card h1 {
+        font-size: 3.2rem;
+    }
+
+    .not-found-card h2 {
+        font-size: 1.4rem;
+    }
+}

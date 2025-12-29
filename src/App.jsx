@@ -11,6 +11,7 @@ import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Socials from "./components/Socials/Socials";
 import BackToTop from "./components/BackToTop/BackToTop";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/research-publications" element={<Research />} />
         <Route path="/events" element={<Events />} />
         <Route path="/appointment" element={<Appointment />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <BackToTop />
       <Footer />
