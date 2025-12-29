@@ -16,10 +16,17 @@ function NavBar() {
             {/* Hamburger / Close Button */}
             <div
                 className="hamburger"
-                onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle navigation"
             >
-                {menuOpen ? "✕" : "☰"}
+                <NavLink to="/appointment" onClick={closeMenu}
+                    className={({ isActive }) =>
+                        `appointment-btn ${menuOpen ? "hide": ""} ` + (isActive ? "active-link" : "inactive-link")
+                    }>
+                    Request Appointment
+                </NavLink>
+                <div onClick={() => setMenuOpen(!menuOpen)}>
+                    {menuOpen ? "✕" : "☰"}
+                </div>
             </div>
 
             {/* Fullscreen Menu */}
@@ -75,6 +82,15 @@ function NavBar() {
                             isActive ? "active-link" : "inactive-link"
                         }>
                         Events
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink to="/appointment" onClick={closeMenu}
+                        className={({ isActive }) =>
+                            "appointment-btn appointment-btn-web " + (isActive ? "active-link" : "inactive-link")
+                        }>
+                        Request Appointment
                     </NavLink>
                 </li>
             </ul>

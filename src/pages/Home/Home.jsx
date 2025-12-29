@@ -66,11 +66,6 @@ const Home = () => {
                             <p key={i}>{line}</p>
                         ))}
                     </div>
-                    <div className="request-appointment">
-                        <a href="#appointment-form" className="request-appointment-btn">
-                            Request an Appointment  
-                        </a>
-                    </div>
                 </div>
             </div>
             <div className="section">

@@ -3,12 +3,14 @@
 ========================= */
 
 .navbar {
-    position: relative;
-    width: 95%;
     padding: 1rem 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.appointment-btn {
+    border-style: solid;
 }
 
 /* =========================
@@ -53,6 +55,8 @@
 ========================= */
 
 .navbar .active-link {
+    border-style: solid;
+    border-color: #772D8B;
     background-color: #772D8B;
     color: #ffffff;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.25);
@@ -68,7 +72,8 @@
 
 .hamburger {
     display: none;
-    position: fixed;
+    width: 100%;
+    justify-content: end;
     top: 1rem;
     right: 1rem;
     z-index: 1001;
@@ -82,17 +87,26 @@
     border-radius: 50%;
 }
 
+.hide {
+    display: none !important;
+} 
 /* =========================
    BREAKPOINT FIX (iPad Mini)
    Switch to hamburger EARLY
 ========================= */
 @media (max-width: 1080px) {
-
+    .appointment-btn-web {
+        display: none !important;
+    } 
     /* Show hamburger */
     .hamburger {
-        display: block;
+        display: flex;
     }
-
+    .appointment-btn {
+        color: #ffffff !important;
+        background-color: #772D8B;
+        margin-right: 1rem;
+    }
     /* Hide desktop menu */
     .navbar-list {
         display: none;
