@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import "./Research.css";
 import Loader from "../../components/Loader/Loader";
 import ScrollLoader from "../../components/ScrollLoader/ScrollLoader";
+import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
 const LIMIT = 20;
 
 const Research = () => {
+    useDocumentTitle("Research & Publications - Genetics UAE");
     const [papers, setPapers] = useState([]);
     const [page, setPage] = useState(0);
 

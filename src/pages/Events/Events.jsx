@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { sanityClient, urlFor } from "../../SanityClient";
 import Loader from "../../components/Loader/Loader";
 import "./Events.css";
+import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
 const Events = () => {
     const [events, setEvents] = useState([]);
@@ -13,6 +14,7 @@ const Events = () => {
     const [modalImage, setModalImage] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
 
+    useDocumentTitle("Events - Genetics UAE");
     useEffect(() => {
         const handleEsc = (e) => {
             if (e.key === "Escape") setModalImage(null);

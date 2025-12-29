@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { sanityClient } from "../../SanityClient";
 import "./Awards.css";
 import Loader from "../../components/Loader/Loader";
+import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
 const Awards = () => {
     const [awards, setAwards] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    useDocumentTitle("Awards - Genetics UAE");
     useEffect(() => {
         sanityClient
             .fetch(`

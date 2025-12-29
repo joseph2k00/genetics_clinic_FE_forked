@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { sanityClient } from "../../SanityClient";
 import "./Education.css"
+import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
 const Education = () => {
     const [experiences, setExperiences] = useState([]);
 
+    useDocumentTitle("Education & Work Experience - Genetics UAE");
     useEffect(() => {
         sanityClient
             .fetch(`

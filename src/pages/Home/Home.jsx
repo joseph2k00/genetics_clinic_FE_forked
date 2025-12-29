@@ -6,11 +6,15 @@ import GeneticsClinics from "./components/GeneticClinics/GeneticsClinics";
 import Videos from "./components/Videos/Videos";
 import Loader from "../../components/Loader/Loader";
 import ContactForm from "../../components/ContactForm/ContactForm";
+import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
 const Home = () => {
     const [hero, setHero] = useState(null);
     const [heroImgUrl, setHeroImageUrl] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    useDocumentTitle("Genetics UAE - Home");
+
     useEffect(() => {
         sanityClient
             .fetch(`
