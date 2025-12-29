@@ -149,7 +149,6 @@ const Research = () => {
                 {error && <p className="error">{error}</p>}
 
                 {!error && papers.length === 0 && <p>No publications found.</p>}
-
                 {papers.map((paper, index) => {
                     const isLast = index === papers.length - 1;
 
@@ -159,18 +158,27 @@ const Research = () => {
                             className="publication-card"
                             key={paper.id}
                         >
-                            <h3 className="publication-title">
-                                <a href={paper.url} target="_blank" rel="noreferrer">
-                                    {paper.title}
-                                </a>
-                            </h3>
+                            <div className="publication-content">
+                                <div className="publication-left">
+                                    <h3 className="publication-title">
+                                        <a href={paper.url} target="_blank" rel="noreferrer">
+                                            {paper.title}
+                                        </a>
+                                    </h3>
 
-                            <p className="publication-meta">
-                                {paper.journal}
-                                {paper.year && ` • ${paper.year}`}
-                                {/* {typeof paper.citationCount === "number" &&
-                                    ` • ${paper.citationCount} citations`} */}
-                            </p>
+                                    {paper.authors && (
+                                        <p className="publication-details">
+                                            Authors: <span className="publication-sub-content">{paper.authors}</span>
+                                        </p>
+                                    )}
+                                </div>
+
+                                {paper.publicationDate && (
+                                    <div className="publication-details">
+                                        Publication Date: <span className="publication-sub-content">{paper.publicationDate}</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     );
                 })}

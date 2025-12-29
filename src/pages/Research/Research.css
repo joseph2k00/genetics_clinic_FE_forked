@@ -108,6 +108,15 @@
     opacity: 0.6;
     padding: 0.8rem 0 0.2rem;
 }
+.publication-details {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #772D8B;
+}
+.publication-sub-content {
+    font-weight: 400;
+    color: #000000;
+}
 /* Mobile */
 @media (max-width: 600px) {
     .metrics-grid {

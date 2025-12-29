@@ -75,8 +75,14 @@ export default async function handler(req, res) {
                     title: item.title || "Untitled",
                     journal: item.fulljournalname || "",
                     year: item.pubdate ? item.pubdate.split(" ")[0] : "",
+                    publicationDate: item.pubdate || "",
+
+                    authors: Array.isArray(item.authors)
+                        ? item.authors.map((a) => a.name).join(", ")
+                        : "",
+
                     url: `https://pubmed.ncbi.nlm.nih.gov/${id}/`,
-                    citationCount: citationsByPmid[String(id)] ?? null, // null if iCite failed
+                    citationCount: citationsByPmid[String(id)] ?? null,
                 };
             })
             .filter(Boolean);
