@@ -47,9 +47,9 @@ const GeneticsClinics = () => {
                 <div className="clinics-track" ref={scrollRef}>
                     {clinics.map((clinic) => (
                         <a className="clinic-card" key={clinic._id} href={clinic.url} target="_blank">
-                            <div className="clinic-placeholder">
+                            {/* <div className="clinic-placeholder">
                                 <span className="clinic-icon">🏥</span>
-                            </div>
+                            </div> */}
 
                             <div className="clinic-overlay">
                                 <h3>{clinic.name}</h3>

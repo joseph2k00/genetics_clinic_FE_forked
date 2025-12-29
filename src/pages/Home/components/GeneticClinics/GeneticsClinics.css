@@ -40,7 +40,7 @@
     gap: 2rem;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 1.5rem 0;
+    padding: 1.5rem 1.5rem;
     scrollbar-width: thin;
 }
 
@@ -59,11 +59,12 @@
 
 .clinic-card {
     width: 240px;
-    height: 240px;
-    border-radius: 2.4rem;
+    height: 120px;
+    border-radius: 2rem;
     overflow: hidden;
     position: relative;
     background: #f0f0f0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 3);
 }
 
 /* ===============================
@@ -73,13 +74,7 @@
 .clinic-overlay {
     position: absolute;
     inset: 0;
-
-    background: linear-gradient(
-        to top,
-        rgba(119, 45, 139, 1.0),
-        transparent
-    );
-
+    background: #772D8B;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -88,11 +83,7 @@
     color: #ffffff;
 }
 .clinic-overlay:hover {
-    background: linear-gradient(
-        to top,
-        rgb(66, 19, 79),
-        transparent
-    );
+    background: #8a3b8f;
     transition: 0.25s;
 }
 
