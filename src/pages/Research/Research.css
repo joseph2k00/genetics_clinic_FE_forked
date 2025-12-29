@@ -80,6 +80,7 @@
 .metric-label {
     margin-top: 0.35rem;
     font-size: 0.9rem;
+    font-weight: 600;
     color: #333;
     opacity: 0.85;
 }
