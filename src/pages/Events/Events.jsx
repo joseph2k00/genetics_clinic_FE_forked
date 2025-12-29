@@ -6,15 +6,15 @@ import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
 const Events = () => {
     const [events, setEvents] = useState([]);
-    const [activeMedia, setActiveMedia] = useState({});
-    const [canScroll, setCanScroll] = useState({});
-    const scrollRefs = useRef({});
+    const [activeIndex, setActiveIndex] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const isMobile = window.innerWidth <= 600;
+    const thumbRefs = useRef({});
     const [modalImage, setModalImage] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
 
     useDocumentTitle("Events - Genetics UAE");
+
+    /* ================= ESC TO CLOSE MODAL ================= */
     useEffect(() => {
         const handleEsc = (e) => {
             if (e.key === "Escape") setModalImage(null);
@@ -22,6 +22,8 @@ const Events = () => {
         window.addEventListener("keydown", handleEsc);
         return () => window.removeEventListener("keydown", handleEsc);
     }, []);
+
+    /* ================= FETCH EVENTS ================= */
     useEffect(() => {
         sanityClient
             .fetch(`
@@ -30,13 +32,8 @@ const Events = () => {
                         _key,
                         title,
                         date,
-                        body[]{
-                            children[]{ text }
-                        },
-                        images[]{
-                            _key,
-                            asset
-                        }
+                        body[]{ children[]{ text } },
+                        images[]{ _key, asset }
                     }
                 }
             `)
@@ -44,148 +41,162 @@ const Events = () => {
                 const evs = data?.events || [];
                 setEvents(evs);
 
-                const initialActive = {};
-                const scrollable = {};
-
-                evs.forEach(event => {
-                    if (event.images?.length) {
-                        initialActive[event._key] = event.images[0];
-
-                        // 🔑 MOBILE = >3, DESKTOP = >6
-                        scrollable[event._key] = isMobile
-                            ? event.images.length > 2
-                            : event.images.length > 4;
-                    }
+                const initialIndexes = {};
+                evs.forEach((e) => {
+                    initialIndexes[e._key] = 0;
                 });
 
-                setActiveMedia(initialActive);
-                setCanScroll(scrollable);
+                setActiveIndex(initialIndexes);
                 setIsLoading(false);
             })
             .catch(console.error);
     }, []);
 
-    const scroll = (key, direction) => {
-        const ref = scrollRefs.current[key];
-        if (!ref) return;
+    /* ================= ARROW HANDLERS ================= */
+    const moveMedia = (eventKey, direction, images) => {
+        setActiveIndex((prev) => {
+            const current = prev[eventKey] ?? 0;
+            const next =
+                direction === "next"
+                    ? Math.min(current + 1, images.length - 1)
+                    : Math.max(current - 1, 0);
 
-        ref.scrollBy({
-            left: direction === "left" ? -240 : 240,
-            behavior: "smooth",
+            // scroll active thumb into view
+            const thumbEl = thumbRefs.current[`${eventKey}-${next}`];
+            thumbEl?.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+                block: "nearest",
+            });
+
+            return { ...prev, [eventKey]: next };
         });
     };
 
-    return isLoading ? <Loader /> :(
+    if (isLoading) return <Loader />;
+
+    return (
         <div className="section">
             <div className="section-title">Events</div>
 
             <div className="events-container">
-                {events.map((event) => (
-                    <div className="event" key={event._key}>
+                {events.map((event) => {
+                    const index = activeIndex[event._key] ?? 0;
+                    const images = event.images || [];
+                    const activeMedia = images[index];
 
-                        {/* MEDIA */}
-                        <div className="event-medias">
-                            <div className="active-event-media">
-                                {activeMedia[event._key] && (
-                                    <>
-                                        <img
-                                            src={urlFor(activeMedia[event._key])
-                                                .width(1400)
-                                                .quality(75)
-                                                .format("webp")
-                                                .url()}
-                                            alt="event"
-                                        />
-
-                                        {/* Fullscreen button */}
-                                        <button
-                                            className="fullscreen-btn"
-                                            onClick={() => {
-                                                setModalLoading(true);
-                                                setModalImage(activeMedia[event._key])
-                                            }}
-                                            aria-label="View fullscreen"
-                                        >
-                                            ⤢
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-                            <div className="event-medias-scroll-list">
-                                {canScroll[event._key] && (
-                                    <div
-                                        className="media-arrow left"
-                                        onClick={() => scroll(event._key, "left")}
-                                    >
-                                        ‹
-                                    </div>
-                                )}
-
-                                <div
-                                    className="media-list"
-                                    ref={(el) =>
-                                        (scrollRefs.current[event._key] = el)
-                                    }
-                                >
-                                    {event.images.map((media) => (
-                                        <div
-                                            key={media._key}
-                                            className={`media-thumb ${
-                                                activeMedia[event._key]?._key === media._key
-                                                    ? "active"
-                                                    : ""
-                                            }`}
-                                            onClick={() =>
-                                                setActiveMedia({
-                                                    ...activeMedia,
-                                                    [event._key]: media,
-                                                })
-                                            }
-                                        >
+                    return (
+                        <div className="event" key={event._key}>
+                            {/* ================= MEDIA ================= */}
+                            <div className="event-medias">
+                                <div className="active-event-media">
+                                    {activeMedia && (
+                                        <>
                                             <img
-                                                src={urlFor(media)
-                                                    .width(220)
-                                                    .quality(60)
+                                                src={urlFor(activeMedia)
+                                                    .width(1400)
+                                                    .quality(75)
                                                     .format("webp")
                                                     .url()}
-                                                alt="thumb"
+                                                alt="event"
                                             />
-                                        </div>
-                                    ))}
+                                            <button
+                                                className="fullscreen-btn"
+                                                onClick={() => {
+                                                    setModalLoading(true);
+                                                    setModalImage(activeMedia);
+                                                }}
+                                            >
+                                                ⤢
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
 
-                                {canScroll[event._key] && (
-                                    <div
+                                <div className="event-medias-scroll-list">
+                                    {/* LEFT */}
+                                    <button
+                                        className="media-arrow left"
+                                        disabled={index === 0}
+                                        onClick={() =>
+                                            moveMedia(event._key, "prev", images)
+                                        }
+                                    >
+                                        ‹
+                                    </button>
+
+                                    {/* THUMBNAILS */}
+                                    <div className="media-list">
+                                        {images.map((media, i) => (
+                                            <div
+                                                key={media._key}
+                                                ref={(el) =>
+                                                    (thumbRefs.current[
+                                                        `${event._key}-${i}`
+                                                    ] = el)
+                                                }
+                                                className={`media-thumb ${
+                                                    i === index ? "active" : ""
+                                                }`}
+                                                onClick={() =>
+                                                    setActiveIndex({
+                                                        ...activeIndex,
+                                                        [event._key]: i,
+                                                    })
+                                                }
+                                            >
+                                                <img
+                                                    src={urlFor(media)
+                                                        .width(220)
+                                                        .quality(60)
+                                                        .format("webp")
+                                                        .url()}
+                                                    alt="thumb"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* RIGHT */}
+                                    <button
                                         className="media-arrow right"
-                                        onClick={() => scroll(event._key, "right")}
+                                        disabled={index === images.length - 1}
+                                        onClick={() =>
+                                            moveMedia(event._key, "next", images)
+                                        }
                                     >
                                         ›
-                                    </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* ================= DETAILS ================= */}
+                            <div className="event-details">
+                                <h3>{event.title}</h3>
+                                {event.date && (
+                                    <p className="event-date">
+                                        {new Date(event.date).toLocaleDateString(
+                                            "en-GB",
+                                            {
+                                                day: "numeric",
+                                                month: "long",
+                                                year: "numeric",
+                                            }
+                                        )}
+                                    </p>
+                                )}
+                                {event.body?.[0]?.children?.[0]?.text && (
+                                    <p className="event-description">
+                                        {event.body[0].children[0].text}
+                                    </p>
                                 )}
                             </div>
                         </div>
-
-                        {/* DETAILS */}
-                        <div className="event-details">
-                            <h3>{event.title}</h3>
-                            {event.date && (
-                                <p className="event-date">
-                                    {new Date(event.date).toLocaleDateString("en-GB", {
-                                        day: "numeric",
-                                        month: "long",
-                                        year: "numeric",
-                                    })}
-                                </p>
-                            )}
-                            {event.body?.[0]?.children?.[0]?.text && (
-                                <p className="event-description">
-                                    {event.body[0].children[0].text}
-                                </p>
-                            )}
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
+
+            {/* ================= MODAL ================= */}
             {modalImage && (
                 <div
                     className="image-modal-overlay"
@@ -195,39 +206,29 @@ const Events = () => {
                         className="image-modal-content"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Loader */}
                         {modalLoading && (
                             <div className="modal-loader">
                                 <Loader />
                             </div>
                         )}
-
-                        {/* Image */}
                         <img
                             src={urlFor(modalImage)
                                 .width(2000)
                                 .quality(85)
                                 .format("webp")
                                 .url()}
-                            alt="fullscreen"
                             onLoad={() => setModalLoading(false)}
-                            style={{
-                                opacity: modalLoading ? 0 : 1,
-                            }}
+                            alt="fullscreen"
                         />
-
-                        {/* Close */}
                         <button
                             className="modal-close"
                             onClick={() => setModalImage(null)}
-                            aria-label="Close"
                         >
                             ✕
                         </button>
                     </div>
                 </div>
             )}
-
         </div>
     );
 };
