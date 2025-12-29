@@ -2,6 +2,18 @@
 // Returns paginated publications from PubMed + citation counts from NIH iCite
 export default async function handler(req, res) {
     try {
+        const formatDate = (yyyymmdd) => {
+            if (!yyyymmdd || yyyymmdd.length !== 8) return "";
+            const y = yyyymmdd.slice(0, 4);
+            const m = yyyymmdd.slice(4, 6);
+            const d = yyyymmdd.slice(6, 8);
+
+            return new Date(`${y}-${m}-${d}`).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            });
+        };
         const page = Math.max(parseInt(req.query.page || "0", 10), 0);
         const limit = Math.min(Math.max(parseInt(req.query.limit || "20", 10), 1), 50);
         const retstart = page * limit;
@@ -75,8 +87,7 @@ export default async function handler(req, res) {
                     title: item.title || "Untitled",
                     journal: item.fulljournalname || "",
                     year: item.pubdate ? item.pubdate.split(" ")[0] : "",
-                    publicationDate: item.pubdate || "",
-
+                    publicationDate: formatDate(item.lastupdate),
                     authors: Array.isArray(item.authors)
                         ? item.authors.map((a) => a.name).join(", ")
                         : "",
