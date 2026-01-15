@@ -175,11 +175,9 @@ const Research = () => {
                                     )}
                                 </div>
 
-                                {paper.source && (
-                                    <div className="publication-details">
-                                        Journal: <span className="publication-sub-content">{paper.source}</span>
-                                    </div>
-                                )}
+                                <div className="publication-details">
+                                    Journal: <span className="publication-sub-content">{paper.source ? paper.source : "GeneReviews®"}</span>
+                                </div>
 
                                 {paper.publicationDate && (
                                     <div className="publication-details">
