@@ -177,7 +177,7 @@ const Research = () => {
 
                                 {paper.source && (
                                     <div className="publication-details">
-                                        Source: <span className="publication-sub-content">{paper.source}</span>
+                                        Journal: <span className="publication-sub-content">{paper.source}</span>
                                     </div>
                                 )}
 
