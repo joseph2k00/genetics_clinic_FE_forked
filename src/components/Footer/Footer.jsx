@@ -7,7 +7,8 @@ import {
     FaFacebookF,
     FaInstagram,
     FaLinkedinIn,
-    FaPhoneAlt
+    FaPhoneAlt,
+    FaYoutube
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -23,7 +24,8 @@ const Footer = () => {
                     whatsapp,
                     facebook,
                     instagram,
-                    linkedin
+                    linkedin,
+                    youtube
                 }
             `)
             .then(setContact)
@@ -94,6 +96,19 @@ const Footer = () => {
                     >
                         <span className="icon">
                             <FaLinkedinIn />
+                        </span>
+                    </a>
+                )}
+                
+                {contact.youtube && (
+                    <a
+                        href={contact.youtube}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-tooltip="YouTube"
+                    >
+                        <span className="icon">
+                            <FaYoutube />
                         </span>
                     </a>
                 )}
