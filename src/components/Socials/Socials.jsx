@@ -34,28 +34,12 @@ const Socials = () => {
             .catch(console.error);
     }, []);
 
-    /* ✅ Auto-close when clicking outside */
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (
-                containerRef.current &&
-                !containerRef.current.contains(e.target)
-            ) {
-                setOpen(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () =>
-            document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
     if (!contact) return null;
 
     return (
         <div className="floating-contact" ref={containerRef}>
             {/* Expanded icons */}
-            <div className={`floating-icons ${open ? "show" : ""}`}>
+            <div className={`floating-icons show`}>
 
                 {contact.phone && (
                     <a href={`tel:${contact.phone}`} data-tooltip="Call">
@@ -113,15 +97,6 @@ const Socials = () => {
                     </a>
                 )}
             </div>
-
-            {/* Toggle Arrow */}
-            <button
-                className={`toggle-btn ${open ? "open" : ""}`}
-                onClick={() => setOpen(!open)}
-                aria-label="Toggle contact options"
-            >
-                <FaChevronUp />
-            </button>
 
             {/* WhatsApp Button */}
             {contact.whatsapp && (
