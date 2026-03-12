@@ -33,7 +33,11 @@ export default async function handler(req, res) {
 
         res.status(200).json(metrics);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to fetch scholar metrics" });
+        console.error("Scholar API error:", error);
+
+        res.status(500).json({
+            error: "Failed to fetch scholar metrics",
+            message: error.message
+        });
     }
 }
