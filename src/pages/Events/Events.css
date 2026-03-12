@@ -309,3 +309,83 @@
 .image-modal-content img {
     transition: opacity 0.25s ease;
 }
+
+/* =========================
+   COLLAPSED DESCRIPTION
+========================= */
+
+.event-description-wrapper {
+    position: relative;
+}
+
+.event-description.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+}
+
+/* fade effect */
+.event-description.collapsed::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+}
+
+/* =========================
+   READ MORE BUTTON
+========================= */
+
+.read-more-btn {
+    margin-top: 0.6rem;
+    background: none;
+    border: none;
+    color: #772D8B;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.read-more-btn:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   TEXT MODAL
+========================= */
+
+.text-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFade 0.25s ease;
+}
+
+.text-modal-content {
+    background: #fff;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    border-radius: 0.8rem;
+    padding: 2rem;
+    position: relative;
+    animation: modalScale 0.25s ease;
+}
+
+/* scrollable body */
+
+.text-modal-body {
+    overflow-y: auto;
+    max-height: 70vh;
+    line-height: 1.7;
+    color: #444;
+}

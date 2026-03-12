@@ -12,6 +12,7 @@ const Events = () => {
     const thumbRefs = useRef({});
     const [modalImage, setModalImage] = useState(null);
     const [modalLoading, setModalLoading] = useState(false);
+    const [textModal, setTextModal] = useState(null);
 
     useDocumentTitle("Events - Genetics UAE");
 
@@ -186,9 +187,18 @@ const Events = () => {
                                         )}
                                     </p>
                                 )}
-                                {event.body?.[0]?.children?.[0]?.text && (
-                                    <div className="event-description">
-                                        <PortableText value={event.body} />
+                                {event.body && (
+                                    <div className="event-description-wrapper">
+                                        <div className="event-description collapsed">
+                                            <PortableText value={event.body} />
+                                        </div>
+
+                                        <button
+                                            className="read-more-btn"
+                                            onClick={() => setTextModal(event.body)}
+                                        >
+                                            Read more
+                                        </button>
                                     </div>
                                 )}
                             </div>
@@ -227,6 +237,28 @@ const Events = () => {
                         >
                             ✕
                         </button>
+                    </div>
+                </div>
+            )}
+            {textModal && (
+                <div
+                    className="text-modal-overlay"
+                    onClick={() => setTextModal(null)}
+                >
+                    <div
+                        className="text-modal-content"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            className="modal-close"
+                            onClick={() => setTextModal(null)}
+                        >
+                            ✕
+                        </button>
+
+                        <div className="text-modal-body">
+                            <PortableText value={textModal} />
+                        </div>
                     </div>
                 </div>
             )}
