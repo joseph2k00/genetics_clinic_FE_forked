@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { sanityClient, urlFor } from "../../SanityClient";
 import Loader from "../../components/Loader/Loader";
+import { PortableText } from "@portabletext/react";
 import "./Events.css";
 import { useDocumentTitle } from "../../hooks/DocumentTItle";
 
@@ -32,7 +33,7 @@ const Events = () => {
                         _key,
                         title,
                         date,
-                        body[]{ children[]{ text } },
+                        body,
                         images[]{ _key, asset }
                     }
                 }
@@ -186,9 +187,9 @@ const Events = () => {
                                     </p>
                                 )}
                                 {event.body?.[0]?.children?.[0]?.text && (
-                                    <p className="event-description">
-                                        {event.body[0].children[0].text}
-                                    </p>
+                                    <div className="event-description">
+                                        <PortableText value={event.body} />
+                                    </div>
                                 )}
                             </div>
                         </div>
