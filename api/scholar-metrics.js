@@ -43,13 +43,26 @@ export default async function handler(req, res) {
     );
 
     const scholarData = await scholarRes.json();
-    
+    const table = scholarData?.cited_by?.table || [];
+    const totalCitations =
+        table.find(obj => Object.prototype.hasOwnProperty.call(obj, "citations"))
+            ?.citations?.all || 0;
+
+    const hIndex =
+        table.find(obj => Object.prototype.hasOwnProperty.call(obj, "h_index"))
+            ?.h_index?.all || 0;
+
+    const i10Index =
+        table.find(obj => Object.prototype.hasOwnProperty.call(obj, "i10_index"))
+            ?.i10_index?.all || 0;
+
     const metrics = {
-    publications,
-    totalCitations: scholarData?.cited_by?.table?.[0]?.citations?.all || 0,
-    hIndex: scholarData?.cited_by?.table?.[0]?.h_index || 0,
-    i10Index: scholarData?.cited_by?.table?.[0]?.i10_index || 0
+        publications,
+        totalCitations,
+        hIndex,
+        i10Index
     };
+    
     /* =========================
        3) CACHE (VERCEL CDN)
     ========================= */
